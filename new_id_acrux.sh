@@ -54,7 +54,7 @@ do
 done
 
 # source automation env
-source $ZEPHYR_BASE/zedblox_automation/zb_auto.sh
+source $ZEPHYR_BASE/zedblox_scripts/zb_auto.sh
 
 P_1="4L"
 P_2="15L"
@@ -105,7 +105,7 @@ west flash --build-dir build/$BOARD_NAME/mcuboot/ --softreset -r nrfjprog
 #west build -b zb_acrux_vp1_0_revb zbacrux_unit_testing; west sign -t imgtool -d build/zb_acrux_vp1_0_revb/zbacrux_unit_testing/ -- --key ../bootloader/mcuboot/zb-ed25519.pem; west flash --build-dir build/zb_acrux_vp1_0_revb/zbacrux_unit_testing/ -r nrfjprog --hex-file build/zb_acrux_vp1_0_revb/zbacrux_unit_testing/zephyr/zephyr.signed.hex --softreset
 
 if [ $SKIP_TEST -eq 0 ]; then
-    west flash --build-dir build/$BOARD_NAME/zbacrux_unit_testing/ -r nrfjprog --hex-file zedblox_automation/images/$BOARD_NAME/$APP_ACRUX_MODEM_FLASH_FILE --softreset
+    west flash --build-dir build/$BOARD_NAME/zbacrux_unit_testing/ -r nrfjprog --hex-file zedblox_scripts/images/$BOARD_NAME/$APP_ACRUX_MODEM_FLASH_FILE --softreset
 
     echo "Please go and flash the modem with new firmware. Check if modem LEDs are blinking or not. They have to blink before flashing modem firmware"
 
@@ -139,9 +139,9 @@ sleep 10
 if [ $SKIP_TEST -eq 0 ]; then
     echo "Flashing test firmware [started]..."
 
-    #west build -b $BOARD_NAME zbacrux_app_v1.0; west sign -t imgtool -d build/$BOARD_NAME/zbacrux_app_v1.0/ --key ../bootloader/mcuboot/zb-ed25519.pem; west flash --build-dir build/$BOARD_NAME/zbacrux_app_v1.0/ -r nrfjprog --hex-file build/$BOARD_NAME/zbacrux_app_v1.0/zephyr/zephyr.signed.hex --softreset
+    #west build -b $BOARD_NAME zb_actipod_app; west sign -t imgtool -d build/$BOARD_NAME/zb_actipod_app/ --key ../bootloader/mcuboot/zb-ed25519.pem; west flash --build-dir build/$BOARD_NAME/zb_actipod_app/ -r nrfjprog --hex-file build/$BOARD_NAME/zb_actipod_app/zephyr/zephyr.signed.hex --softreset
 
-    west flash --build-dir build/$BOARD_NAME/zbacrux_app_v1.0/ -r nrfjprog --hex-file zedblox_automation/images/$BOARD_NAME/$APP_ACRUX_TEST_FILE --softreset
+    west flash --build-dir build/$BOARD_NAME/zb_actipod_app/ -r nrfjprog --hex-file zedblox_scripts/images/$BOARD_NAME/$APP_ACRUX_TEST_FILE --softreset
 
     if [ $? -eq 0 ]; then
         echo "[Sucess] Testing firmware flashed..."
@@ -170,7 +170,7 @@ else
     APP_FW_FILE=$APP_15L_FW_FILE
 fi
 
-west flash --build-dir build/$BOARD_NAME/zbacrux_app_v1.0/ -r nrfjprog --hex-file zedblox_automation/images/$BOARD_NAME/$APP_FW_FILE --softreset
+west flash --build-dir build/$BOARD_NAME/zb_actipod_app/ -r nrfjprog --hex-file zedblox_scripts/images/$BOARD_NAME/$APP_FW_FILE --softreset
 
 if [ $? -eq 0 ]; then
     echo "[Sucess] FINAL APP firmware flashed..."
